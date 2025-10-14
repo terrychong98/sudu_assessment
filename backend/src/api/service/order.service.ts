@@ -3,7 +3,7 @@ import useMongoUtils from "../../utils/mongo";
 import {
   CreateOrder,
   Order,
-  OrderItem,
+  OrderSearchCriteria,
   OrderStatus,
   UpdateOrderStatus,
 } from "../model/order.model";
@@ -11,9 +11,15 @@ import { HttpStatusCode } from "../constant/HttpStatus";
 import { ApiResponse } from "../model/api-response.model";
 
 const useOrderService = () => {
-  const getOrders = async () => {
+  const getOrders = async (criteria: OrderSearchCriteria) => {
     const mongoUtils = useMongoUtils();
-    const orders = await mongoUtils.findMany<Order[]>({}, "orders");
+    const filters = criteria.status ? { status: criteria.status } : {};
+    const orders = await mongoUtils.findByPage(
+      filters,
+      criteria.offset,
+      criteria.limit,
+      "orders"
+    );
     return ApiResponse.builder().status(HttpStatusCode.OK).data(orders).build();
   };
 
@@ -30,8 +36,8 @@ const useOrderService = () => {
     const newOrder = await mongoUtils.insert(
       {
         ...order,
-        priorityScore: computePriority(order.items, order.dueDate),
-        status: OrderStatus.OPEN,
+        priorityScore: computePriority(order.quantity, order.dueDate),
+        status: OrderStatus.PENDING,
       },
       "orders"
     );
@@ -88,7 +94,7 @@ const useOrderService = () => {
       if (isNaN(dueDate.getTime())) {
         message.push("Due date must be a valid date");
       } else {
-        if (order.dueDate < new Date()) {
+        if (new Date(order.dueDate) < new Date()) {
           message.push("Due date must be in the future");
         }
       }
@@ -96,21 +102,20 @@ const useOrderService = () => {
       message.push("Due date is required");
     }
 
-    if (order.items.length === 0) {
-      message.push("Order must have at least one item");
+    if (!order.product) {
+      message.push("Product is required");
     } else {
-      if (order.items.some((item: OrderItem) => item.quantity <= 0)) {
-        message.push("Item quantity must be greater than 0");
+      if (order.quantity <= 0) {
+        message.push("Quantity must be greater than 0");
       }
     }
     return message;
   };
 
   const computePriority = (
-    items: OrderItem[],
+    quantity: number,
     dueDate: Date | string
   ): number => {
-    const quantity = items.reduce((total, item) => total + item.quantity, 0);
     const dateObj = new Date(dueDate);
     // 1️⃣ Calculate days until due date
     const daysUntilDue = Math.max(

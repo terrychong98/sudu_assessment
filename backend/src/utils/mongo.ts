@@ -32,6 +32,27 @@ const useMongoUtils = () => {
     return document;
   };
 
+  const findByPage = async <T extends Document>(
+    _query: object,
+    offset: number = 1,
+    limit: number = 10,
+    collectionName: string
+  ) => {
+    const collection: Collection<T> = db.collection(collectionName);
+    const count = await collection.countDocuments(_query);
+    const cursor: FindCursor<WithId<T>> = collection
+      .find(_query)
+      .skip((offset - 1) * limit)
+      .limit(limit);
+    const document = await cursor.toArray();
+    return {
+      data: document,
+      total: count,
+      number: offset,
+      size: limit,
+    };
+  };
+
   const findMany = async <T extends Document>(
     _query: object,
     collectionName: string
@@ -62,6 +83,7 @@ const useMongoUtils = () => {
     findMany,
     insert,
     update,
+    findByPage,
   };
 };
 

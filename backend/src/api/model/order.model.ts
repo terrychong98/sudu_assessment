@@ -1,21 +1,21 @@
 import { Document } from "mongodb";
+import { SearchCriteria } from "./shared";
+
+export interface OrderSearchCriteria extends SearchCriteria {
+  status?: string;
+}
 
 export interface Order extends Document {
   //   orderNumber: string;
   dueDate: Date;
   priorityScore: number;
-  items: OrderItem[];
   status: OrderStatus;
-}
-
-export interface OrderItem {
   product: string;
-  productName: string;
   quantity: number;
 }
 
 export enum OrderStatus {
-  OPEN = "OPEN",
+  PENDING = "PENDING",
   IN_PROGRESS = "IN_PROGRESS",
   COMPLETED = "COMPLETED",
 }

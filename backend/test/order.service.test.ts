@@ -39,7 +39,6 @@ describe("Order Service", () => {
   test("createOrder() should validate and reject invalid order", async () => {
     const badOrder = {
       dueDate: "invalid-date",
-      items: [],
     };
 
     const result = await useOrderService().createOrder(badOrder as any);
@@ -53,7 +52,8 @@ describe("Order Service", () => {
   test("createOrder() should insert valid order and compute priority", async () => {
     const goodOrder = {
       dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ahead
-      items: [{ quantity: 10 }],
+      quantity: 10,
+      product: "Test Product",
     };
 
     mockInsert.mockResolvedValue({ _id: "abc123" });
@@ -108,7 +108,7 @@ describe("Order Service", () => {
     const service: any = useOrderService();
 
     const score = service.computePriority(
-      [{ quantity: 100 }],
+      100,
       new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
     );
 

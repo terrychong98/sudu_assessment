@@ -7,7 +7,11 @@ export const getOrders = async (
   next: NextFunction
 ) => {
   try {
-    const response = await useOrderService().getOrders();
+    const response = await useOrderService().getOrders({
+      status: req.query.status as string,
+      offset: Number(req.query.offset),
+      limit: Number(req.query.limit),
+    });
     return res.status(response.status).json(response);
   } catch (err) {
     next(err);
@@ -20,9 +24,9 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   try {
-    const { items, quantity, dueDate } = req.body;
+    const { product, quantity, dueDate } = req.body;
     const response = await useOrderService().createOrder({
-      items,
+      product,
       quantity,
       dueDate,
     });
