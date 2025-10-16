@@ -66,10 +66,6 @@ Does not need to setup .env, commit into git since it is assessment.
 - Communication between microservices occurs within a secure internal network.
 - Order Data Volume Is Manageable.
 
-## How this feature aligns with SuDu AI’s goal
-
-Integrating OAuth2 and Redis caching helps SuDu AI automate 80% of routine operations by enabling secure, seamless access and faster data processing. These features reduce manual management, improve system speed and reliability, and ensure the platform runs efficiently with minimal human intervention.
-
 ## AI Usage Log
 
 - API Prompt where mainly focus in getting overall idea and generating boilerplate of the project using [ChatGpt](https://chatgpt.com/share/68ec5e1c-f2b8-800b-9288-82415e8d28ca).
@@ -83,3 +79,7 @@ Requirements: Frontend (Vue.js):
 - Build a single-page dashboard using Vue 3
 - Display a list of production orders with columns: Order ID, Product Name, ...
 ```
+
+## How this feature aligns with SuDu AI’s goal
+
+Integrating OAuth2 and Redis caching helps SuDu AI automate 80% of routine operations by enabling secure, seamless access and faster data processing. These features reduce manual management, improve system speed and reliability, and ensure the platform runs efficiently with minimal human intervention.
