@@ -4,8 +4,7 @@
   "type": "module",
   "main": "dist/server.js",
   "engines": {
-    "node": "24.10.0",
-    "npm": "11.6.2"
+    "node": "24.10.0"
   },
   "scripts": {
     "dev": "dotenv -e .env.development -- tsx watch src/server.ts",
