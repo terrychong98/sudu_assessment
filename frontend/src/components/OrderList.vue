@@ -2,6 +2,7 @@
 import { defineComponent, ref, onMounted } from "vue";
 import { useOrdersStore } from "../stores/orders";
 import { DataTable, AutoComplete, Column, Button } from "primevue";
+import { watch } from "vue";
 
 export default defineComponent({
   components: { DataTable, Column, Button, AutoComplete },
@@ -10,7 +11,7 @@ export default defineComponent({
     const orders = ref([]);
     const total = ref(0);
     const pageSize = ref(10);
-    const statusFilter = ref<{ label: string; value: string }>(null);
+    const statusFilter = ref<{ label: string; value: string }>();
     const statusOptions = [
       { label: "All", value: null },
       { label: "Pending", value: "PENDING" },
@@ -37,6 +38,11 @@ export default defineComponent({
     const handleToggleStatus = (_id: string, status: string) => {
       store.toggleStatus(_id, status);
     };
+
+    watch(
+      () => statusFilter.value,
+      () => fetchOrders()
+    );
 
     return {
       orders,

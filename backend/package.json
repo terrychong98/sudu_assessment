@@ -4,11 +4,11 @@
   "type": "module",
   "main": "dist/server.js",
   "engines": {
-    "node": ">=22.14.0",
-    "npm": ">=10.9.2"
+    "node": "24.10.0",
+    "npm": "11.6.2"
   },
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "dotenv -e .env.development -- tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "test": "jest --detectOpenHandles --runInBand"
@@ -25,10 +25,10 @@
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.11.0",
-    "eslint": "^8.0.0",
+    "dotenv-cli": "^10.0.0",
+    "eslint": "^9.38.0",
     "jest": "^30.2.0",
     "ts-jest": "^29.4.5",
-    "ts-node-dev": "^2.0.0",
     "tsx": "^4.20.6",
     "typescript": "^5.3.3"
   }

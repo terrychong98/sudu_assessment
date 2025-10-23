@@ -1,52 +1,22 @@
-# Backend
+## Prerequisites
 
-## Installation
+### Use the correct Node Version
 
-Install backend dependencies with npm
+Install [Node Version Manager (nvm)](https://github.com/coreybutler/nvm-windows/releases), look for nvm-setup.exe.
 
-```bash
-  cd ./backend
-  npm i
-```
-
-## Startup
-
-Does not need to setup .env, commit into git since it is assessment.
+#### Install NodeJS version 24.10.1
 
 ```bash
-  npm run dev
+nvm install 24.10.0
 ```
 
-## Tech Stack
-
-| Stacks           | Reason                                                                                                     |
-| ---------------- | ---------------------------------------------------------------------------------------------------------- |
-| Express.js, Jest | As recommended by the assessment. Its new tech stack to myself, and would like to explore it.              |
-| MongoDB          | It has a free version on cloud, we not required local install and startup, it is easier for project setup. |
-
-# Frontend
-
-## Installation
+#### Make sure is using v24.10.1
 
 ```bash
-  cd ./frontend
-  npm i
+nvm use 24.10.0
 ```
 
-## Startup
-
-Does not need to setup .env, commit into git since it is assessment.
-
-```bash
-  npm run dev
-```
-
-## Tech Stack
-
-| Stacks       | Reason                                       |
-| ------------ | -------------------------------------------- |
-| PrimeVue V4  | Complete UI components ready-to-use          |
-| Tailwind CSS | Reusability, Consistent and less custom code |
+- Backend & Frontend README.md is in its own folder.
 
 ## Architecture Overview
 
